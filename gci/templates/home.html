@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GCI Home</title>
+        <link rel="stylesheet" href=" {{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Welcome</h1>
+
+        <div id="webcam-section">
+            <h3>Record a face video:</h3>
+            <video id="video" width="400" height="300" autoplay></video>
+            <div id="instructions">Please move your head slightly left and right while recording...</div>
+            <button id="record">Start Recording</button>
+            
+            <form id="webcam-form" method="POST" style="display:none">
+                <label for="webcam-name">Name</label>
+                <input type="text" id="webcam-name" name="name" required><br>
+                <input type="hidden" name="video_data" id="video-data">
+                <input type="submit" value="Upload Video">
+            </form>
+        </div>
+
+        <hr>
+        <div>
+            <h1>Uploaded Faces</h1>
+            {% for m in media %}
+                <div>
+                    <p>{{ m['name'] }}</p>
+                    <video src="{{ url_for('routes.media', filename=m['filename']) }}" width="200" controls></video>
+                </div>
+            {% endfor %}
+        </div>
+
+        <script src="{{ url_for('static', filename='js/webcam.js') }}"></script>
+    </body>
+</html>
